@@ -2,8 +2,10 @@
 {:source-paths ["src"]
  :dependencies [[hoplon "7.3.3-SNAPSHOT"]
                 [binaryage/devtools "1.0.6"]]
- :dev-http {8000 "public"}
+ :dev-http {8000 "docs"}
  :builds {:app {:target :browser
+                :output-dir "docs/js"
+                :asset-path "/js"
                 :modules {:main {:init-fn buuummm.main/init}}
                 :devtools {:before-load buuummm.main/stop
                            :after-load buuummm.main/start}}}}

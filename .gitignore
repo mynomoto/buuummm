@@ -2,5 +2,5 @@
 .lsp/.cache
 .nrepl-*
 .shadow-cljs/
-public/js/**/
+docs/js/**/
 node_modules/
