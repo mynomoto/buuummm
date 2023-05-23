@@ -1,10 +1,14 @@
+body {
+    margin: 0;
+}
+
 .game {
     background-color: #380700;
     background-image: url("../image/black-felt.png");
     background-repeat: repeat;
     width: 100%;
-    height: 90vh;
-    background-size: 100% 90vh;
+    height: 100vh;
+    background-size: 100% 100vh;
 }
 
 .green {
@@ -18,6 +22,7 @@
     font-size: 24px;
     font-family: monospace;
     color: beige;
+    margin-left: 8px;
 }
 
 .slime-idle {

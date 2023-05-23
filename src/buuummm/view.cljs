@@ -94,18 +94,20 @@
    :vertical (rand-nth vertical-values)
    :color (random-color)
    :status :idle
+   :started-at (js/Date.now)
+   :last-updated-at (js/Date.now)
    :selected-word (create-selected (nth words @index))})
 
 (defn color->px
   [color]
   (get 
-  {:purple "0px"
-   :grey "72px"
-   :brown "144px"
-   :green "216px"
-   :blue "288px"
-   :orange "360px"
-   :red "432"} color :green))
+    {:purple "0px"
+     :grey "72px"
+     :brown "144px"
+     :green "216px"
+     :blue "288px"
+     :orange "360px"
+     :red "432"} color :green))
 
 (h/defelem slime
   []
@@ -122,13 +124,23 @@
   []
   (h/div :class "bee-die" :style "background-position-y: 90px;"))
 
+(defn wpm
+  [state]
+  (let [wpm-result (js/Math.trunc (/ (:finished-words state)
+                           (/ (/ (- (:last-updated-at state)
+                                   (:started-at state)) 1000) 60)))]
+    (if (js/Number.isNaN wpm-result)
+      0
+      wpm-result)))
+
 (defn hello []
   (h/div
     (h/div :class "game"
       (h/div :class "score"
         (h/div (h/text "Correct Chars: ~(:correct-char state)"))
         (h/div (h/text "Correct Words: ~(:finished-words state)"))
-        (h/div (h/text "Wrong Chars  : ~(:incorrect-char state)")))
+        (h/div (h/text "Wrong Chars  : ~(:incorrect-char state)"))
+        (h/div (h/text "WPM          : ~(wpm state)")))
       (h/div  :style (cell= (str "font-size: 56px; margin:0px; text-transform:uppercase; position:absolute; right:" (:horizontal state) "vw; bottom: " (:vertical state) "vh;"))
         (slime)
         (h/for-tpl [char (cell= (:selected-word state))]
@@ -151,12 +163,12 @@
                  "Escape"
                  "GroupNext"
                  "Meta"
-                 "Shift"}
+                 "Shift"
+                 "Tab"}
       (.-key e))))
 
 (defn process-key
   [e]
-  (js/console.log e)
   (when-not (ignore? e)
     (if (str/starts-with? (nth words (:index @state))
           (str (:got-right @state) (.-key e)))
@@ -164,12 +176,14 @@
                                  (-> os
                                    (update :got-right str (.-key e))
                                    (update :correct-char inc)
+                                   (assoc :last-updated-at (js/Date.now))
                                    (update-in [:selected-word (dec (count (str (:got-right @state) (.-key e))))]
                                      assoc :status :hit))))]
         (when (= (:got-right right) (nth words (:index @state)))
           (.play bum)
           (swap! state (fn [os]
-                         (assoc os :status :die)))
+                         (assoc os :status :die
+                           :last-updated-at (js/Date.now))))
           (h/with-timeout 800
             (js/console.log 
               (swap! state (fn [os]
@@ -177,6 +191,7 @@
                                (-> os
                                  (update :finished-words inc)
                                  (assoc :got-right ""
+                                   :last-updated-at (js/Date.now)
                                    :color (random-color)
                                    :status :idle
                                    :horizontal (rand-nth horizontal-values)
@@ -186,5 +201,6 @@
       (do 
         (swap! state (fn [os]
                        (-> os
+                         (assoc :last-updated-at (js/Date.now))
                          (update :incorrect-char inc))))
         (.play errou)))))
