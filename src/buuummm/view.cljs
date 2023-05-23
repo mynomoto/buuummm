@@ -93,6 +93,7 @@
    :horizontal (rand-nth horizontal-values)
    :vertical (rand-nth vertical-values)
    :color (random-color)
+   :status :idle
    :selected-word (create-selected (nth words @index))})
 
 (defn color->px
@@ -106,6 +107,16 @@
    :orange "360px"
    :red "432"} color :green))
 
+(h/defelem slime
+  []
+  (h/div :class (cell= {:slime-die (= (:status state) :die)
+                        :slime-idle (= (:status state) :idle)})
+    :style (cell= (str "background-position-y:" (color->px (:color state)) ";"))))
+
+(h/defelem bee
+  []
+  (h/div :class "bee-idle"
+    :style "background-position-y: 0;"))
 
 (defn hello []
   (h/div
@@ -115,7 +126,7 @@
         (h/div (h/text "Palavras ~(:finished-words state)"))
         (h/div (h/text "Errou: ~(:incorrect-char state)")))
       (h/div  :style (cell= (str "font-size: 56px; margin:0px; text-transform:uppercase; position:absolute; right:" (:horizontal state) "vw; bottom: " (:vertical state) "vh;"))
-        (h/div :class "slime-die" :style (cell= (str "background-position-y:" (color->px (:color state)) ";")))
+        (slime)
         (h/for-tpl [char (cell= (:selected-word state))]
           (h/span :class (cell=  {:red (= :miss (:status char))
                                   :green (not= :miss (:status char))})
@@ -138,7 +149,9 @@
                                    assoc :status :hit))))]
       (when (= (:got-right right) (nth words (:index @state)))
         (.play bum)
-        (h/with-timeout 200
+        (swap! state (fn [os]
+                       (assoc os :status :die)))
+        (h/with-timeout 800
           (js/console.log 
           (swap! state (fn [os]
                          (let [new-index (inc (:index os))]
@@ -146,6 +159,7 @@
                            (update :finished-words inc)
                            (assoc :got-right ""
                              :color (random-color)
+                             :status :idle
                              :horizontal (rand-nth horizontal-values)
                              :vertical (rand-nth vertical-values)
                              :selected-word (create-selected (nth words new-index))

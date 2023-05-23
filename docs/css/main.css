@@ -12,21 +12,50 @@
     color: red;
 }
 
-.slime-die {
+.score {
+    font-size: 24px;
+}
+
+.slime-idle {
     background-image: url("../image/slime_idle2.png");
     background-position-x: 0;
     scale: 4;
     width: 80px;
     height: 72px;
-    animation: spriteAnimation 0.4s steps(7) infinite;
+    animation: idleSpriteAnimation 0.4s steps(7) infinite;
     margin: 0 auto;
 }
 
-@keyframes spriteAnimation {
-  from { background-position-x: 0; }
-  to { background-position-x: -560px; }
+@keyframes idleSpriteAnimation {
+    from { background-position-x: 0; }
+    to { background-position-x: -560px; }
 }
 
-.score {
-    font-size: 24px;
+.slime-die {
+    background-image: url("../image/slime_die.png");
+    background-position-x: 0;
+    scale: 4;
+    width: 80px;
+    height: 72px;
+    animation: dieSpriteAnimation 0.8s steps(12) 2 forwards;
+    margin: 0 auto;
+}
+
+@keyframes dieSpriteAnimation {
+    from { background-position-x: 0; }
+    to { background-position-x: -960px; }
+}
+
+.bee-idle {
+    background-image: url("../image/bee_spritesheet.png");
+    background-position-x: -1px;
+    scale: 4;
+    width: 25px;
+    height: 30px;
+    animation: beeIdlespriteAnimation 0.4s steps(4) infinite;
+    margin: 0 auto;
+}
+@keyframes beeIdlespriteAnimation {
+    from { background-position-x: -1px; }
+    to { background-position-x: -101px; }
 }
