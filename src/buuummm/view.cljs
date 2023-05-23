@@ -126,9 +126,9 @@
   (h/div
     (h/div :class "game"
       (h/div :class "score"
-        (h/div (h/text "Acertou: ~(:correct-char state)"))
-        (h/div (h/text "Palavras ~(:finished-words state)"))
-        (h/div (h/text "Errou: ~(:incorrect-char state)")))
+        (h/div (h/text "Correct Chars: ~(:correct-char state)"))
+        (h/div (h/text "Correct Words: ~(:finished-words state)"))
+        (h/div (h/text "Wrong Chars  : ~(:incorrect-char state)")))
       (h/div  :style (cell= (str "font-size: 56px; margin:0px; text-transform:uppercase; position:absolute; right:" (:horizontal state) "vw; bottom: " (:vertical state) "vh;"))
         (slime)
         (h/for-tpl [char (cell= (:selected-word state))]
@@ -139,35 +139,52 @@
 (def errou (js/Audio. "sound/errou.wav"))
 (def bum (js/Audio. "sound/bum.wav"))
 
+(defn- ignore?
+  [^js e]
+  (or (.-platformModifierKey e)
+    (.-metaKey e)
+    (.-altKey e)
+    (contains? #{"Alt"
+                 "AltGraph"
+                 "CapsLock"
+                 "Control"
+                 "Escape"
+                 "GroupNext"
+                 "Meta"
+                 "Shift"}
+      (.-key e))))
+
 (defn process-key
   [e]
-  (if (str/starts-with? (nth words (:index @state))
-        (str (:got-right @state) (.-key e)))
-    (let [right (swap! state (fn [os]
-                               (-> os
-                                 (update :got-right str (.-key e))
-                                 (update :correct-char inc)
-                                 (update-in [:selected-word (dec (count (str (:got-right @state) (.-key e))))]
-                                   assoc :status :hit))))]
-      (when (= (:got-right right) (nth words (:index @state)))
-        (.play bum)
-        (swap! state (fn [os]
-                       (assoc os :status :die)))
-        (h/with-timeout 800
-          (js/console.log 
+  (js/console.log e)
+  (when-not (ignore? e)
+    (if (str/starts-with? (nth words (:index @state))
+          (str (:got-right @state) (.-key e)))
+      (let [right (swap! state (fn [os]
+                                 (-> os
+                                   (update :got-right str (.-key e))
+                                   (update :correct-char inc)
+                                   (update-in [:selected-word (dec (count (str (:got-right @state) (.-key e))))]
+                                     assoc :status :hit))))]
+        (when (= (:got-right right) (nth words (:index @state)))
+          (.play bum)
           (swap! state (fn [os]
-                         (let [new-index (inc (:index os))]
-                         (-> os
-                           (update :finished-words inc)
-                           (assoc :got-right ""
-                             :color (random-color)
-                             :status :idle
-                             :horizontal (rand-nth horizontal-values)
-                             :vertical (rand-nth vertical-values)
-                             :selected-word (create-selected (nth words new-index))
-                             :index new-index)))))))))
-    (do 
-      (swap! state (fn [os]
-                     (-> os
-                       (update :incorrect-char inc))))
-      (.play errou))))
+                         (assoc os :status :die)))
+          (h/with-timeout 800
+            (js/console.log 
+              (swap! state (fn [os]
+                             (let [new-index (inc (:index os))]
+                               (-> os
+                                 (update :finished-words inc)
+                                 (assoc :got-right ""
+                                   :color (random-color)
+                                   :status :idle
+                                   :horizontal (rand-nth horizontal-values)
+                                   :vertical (rand-nth vertical-values)
+                                   :selected-word (create-selected (nth words new-index))
+                                   :index new-index)))))))))
+      (do 
+        (swap! state (fn [os]
+                       (-> os
+                         (update :incorrect-char inc))))
+        (.play errou)))))
