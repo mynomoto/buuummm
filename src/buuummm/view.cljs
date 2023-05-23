@@ -4,28 +4,67 @@
     [hoplon.core :as h]
     [javelin.core :as j :refer [cell cell= defc defc=]]))
 
+(def level-1
+  ["la;"
+   "sal"
+   "salsa"
+   "dadas;"
+   "assada"
+   "sassa"
+   "kakas"
+   "ja"
+   "safada"
+   "kaka"
+   "asa"
+   "fadas;"
+   "salada"
+   "lalas"
+   "fala;"
+   "alas"
+   "sala"
+   "jaja"
+   "lala"])
+
+(def level-2
+  ["sala"
+   "sal"
+   "fala"
+   "gala"
+   "asa"
+   "jaja"
+   "kaka"
+   "fada"
+   "haja"
+   "gaja"
+   "fadas"
+   "alas"
+   "lala"
+   "safada"
+   "adaga"
+   "haja;"
+   "salada"
+   "safada;"
+   "fadas;"
+   "alfa"
+   "dada"
+   "ska"
+   "lalas"
+   "adagas"
+   "shala"
+   "hal"
+   "lag"
+   "fada;"
+   "ah"
+   "gah"
+   "shh;"
+   "haka"
+   "salas"
+   "gala"])
+
 (def words
   (cycle
     (shuffle
-      ["la;"
-       "sal"
-       "salsa"
-       "dadas;"
-       "assada"
-       "sassa"
-       "kakas"
-       "ja"
-       "safada"
-       "kaka"
-       "asa"
-       "fadas;"
-       "salada"
-       "lalas"
-       "fala;"
-       "alas"
-       "sala"
-       "jaja"
-       "lala"])))
+      level-2)))
 
 (defc index 0)
 
@@ -47,6 +86,9 @@
 
 (defc state
   {:index 0
+   :correct-char 0
+   :incorrect-char 0
+   :finished-words 0
    :got-right ""
    :horizontal (rand-nth horizontal-values)
    :vertical (rand-nth vertical-values)
@@ -68,6 +110,10 @@
 (defn hello []
   (h/div
     (h/div :class "game"
+      (h/div :class "score"
+        (h/div (h/text "Acertou: ~(:correct-char state)"))
+        (h/div (h/text "Palavras ~(:finished-words state)"))
+        (h/div (h/text "Errou: ~(:incorrect-char state)")))
       (h/div  :style (cell= (str "font-size: 56px; margin:0px; text-transform:uppercase; position:absolute; right:" (:horizontal state) "vw; bottom: " (:vertical state) "vh;"))
         (h/div :class "slime-die" :style (cell= (str "background-position-y:" (color->px (:color state)) ";")))
         (h/for-tpl [char (cell= (:selected-word state))]
@@ -87,6 +133,7 @@
     (let [right (swap! state (fn [os]
                                (-> os
                                  (update :got-right str (.-key e))
+                                 (update :correct-char inc)
                                  (update-in [:selected-word (dec (count (str (:got-right @state) (.-key e))))]
                                    assoc :status :hit))))]
       (when (= (:got-right right) (nth words (:index @state)))
@@ -96,10 +143,15 @@
           (swap! state (fn [os]
                          (let [new-index (inc (:index os))]
                          (-> os
+                           (update :finished-words inc)
                            (assoc :got-right ""
                              :color (random-color)
                              :horizontal (rand-nth horizontal-values)
                              :vertical (rand-nth vertical-values)
                              :selected-word (create-selected (nth words new-index))
                              :index new-index)))))))))
-    (.play errou)))
+    (do 
+      (swap! state (fn [os]
+                     (-> os
+                       (update :incorrect-char inc))))
+      (.play errou))))
