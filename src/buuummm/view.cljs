@@ -118,6 +118,10 @@
   (h/div :class "bee-idle"
     :style "background-position-y: 0;"))
 
+(h/defelem bee-die
+  []
+  (h/div :class "bee-die" :style "background-position-y: 90px;"))
+
 (defn hello []
   (h/div
     (h/div :class "game"
