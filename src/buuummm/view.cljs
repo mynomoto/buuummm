@@ -130,9 +130,7 @@
         (h/for-tpl [char (cell= (:selected-word state))]
           (h/span :class (cell=  {:red (= :miss (:status char))
                                   :green (not= :miss (:status char))})
-            (h/text "~(:char char)")))))
-    (h/a :href "https://br.freepik.com/fotos-gratis/bela-foto-de-um-prado-com-arvores-na-superficie_14807636.htm#query=c%C3%A9u%20grama%20arvores&position=7&from_view=search&track=ais"
-      "Imagem de wirestock") " no Freepik"))
+            (h/text "~(:char char)")))))))
 
 (def errou (js/Audio. "sound/errou.wav"))
 (def bum (js/Audio. "sound/bum.wav"))
