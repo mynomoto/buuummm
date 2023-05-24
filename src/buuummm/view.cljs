@@ -128,10 +128,20 @@
   [state]
   (let [wpm-result (js/Math.trunc (/ (:finished-words state)
                            (/ (/ (- (:last-updated-at state)
-                                   (:started-at state)) 1000) 60)))]
+                                   (:started-at state)
+                                   (* 800 (:finished-words state))) 1000) 60)))]
     (if (js/Number.isNaN wpm-result)
       0
       wpm-result)))
+
+(defn accuracy
+  [state]
+  (let [accuracy-result (js/Math.trunc (* 100 (/ (:correct-char state)
+                                                (+ (:correct-char state)
+                                                  (:incorrect-char state)))))]
+    (if (js/Number.isNaN accuracy-result)
+      0
+      accuracy-result)))
 
 (defn hello []
   (h/div
@@ -140,7 +150,9 @@
         (h/div (h/text "Correct Chars: ~(:correct-char state)"))
         (h/div (h/text "Correct Words: ~(:finished-words state)"))
         (h/div (h/text "Wrong Chars  : ~(:incorrect-char state)"))
-        (h/div (h/text "WPM          : ~(wpm state)")))
+        (h/div (h/text "WPM          : ~(wpm state)"))
+        (h/div (h/text "Accuracy     : ~(accuracy state)%"))
+        )
       (h/div  :style (cell= (str "font-size: 56px; margin:0px; text-transform:uppercase; position:absolute; right:" (:horizontal state) "vw; bottom: " (:vertical state) "vh;"))
         (slime)
         (h/for-tpl [char (cell= (:selected-word state))]
