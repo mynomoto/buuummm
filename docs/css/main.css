@@ -63,6 +63,7 @@ body {
     height: 30px;
     animation: beeIdlespriteAnimation 0.4s steps(4) infinite;
     margin: 0 auto;
+    margin-bottom: 40px;
 }
 @keyframes beeIdlespriteAnimation {
     from { background-position-x: -1px; }
@@ -77,6 +78,7 @@ body {
     height: 30px;
     animation: beeDiespriteAnimation 0.8s steps(8) 1 forwards;
     margin: 0 auto;
+    margin-bottom: 30px;
 }
 @keyframes beeDiespriteAnimation {
     from { background-position-x: -1px; }
