@@ -88,20 +88,22 @@
 (def vertical-values
   (vec (range 14 75)))
 
-(defc state
-  {:index 0
-   :correct-char 0
-   :incorrect-char 0
-   :finished-words 0
-   :enemy-type :slime
-   :got-right ""
-   :horizontal (rand-nth horizontal-values)
-   :vertical (rand-nth vertical-values)
-   :color (random-color)
-   :status :idle
-   :started-at (js/Date.now)
-   :last-updated-at (js/Date.now)
-   :selected-word (create-selected (nth words @index))})
+(defonce state
+  (cell
+    {:index 0
+     :correct-char 0
+     :incorrect-char 0
+     :finished-words 0
+     :enemy-type :slime
+     :got-right ""
+     :extra-stats true
+     :horizontal (rand-nth horizontal-values)
+     :vertical (rand-nth vertical-values)
+     :color (random-color)
+     :status :idle
+     :started-at (js/Date.now)
+     :last-updated-at (js/Date.now)
+     :selected-word (create-selected (nth words @index))}))
 
 (defn color->px
   [color]
@@ -152,8 +154,9 @@
         (h/div (h/text "Correct Chars: ~(:correct-char state)"))
         (h/div (h/text "Correct Words: ~(:finished-words state)"))
         (h/div (h/text "Wrong Chars  : ~(:incorrect-char state)"))
-        (h/div (h/text "WPM          : ~(wpm state)"))
-        (h/div (h/text "Accuracy     : ~(accuracy state)%")))
+        (h/when-tpl (cell= (:extra-stats state))
+          [(h/div (h/text "WPM          : ~(wpm state)"))
+           (h/div (h/text "Accuracy     : ~(accuracy state)%"))]))
       (h/div  :style (cell= (str "font-size: 56px; margin:0px; text-transform:uppercase; position:absolute; right:" (:horizontal state) "vw; bottom: " (:vertical state) "vh;"))
         (h/if-tpl (cell= (= :slime (:enemy-type state))) 
           (slime)
@@ -194,8 +197,14 @@
                  "F12"}
       (.-key e))))
 
+(defn toggle-extra-stats
+  []
+  (swap! state update :extra-stats not))
+
 (defn process-key
   [e]
+  (when (= "Control" (.-key e))
+    (toggle-extra-stats))
   (when-not (ignore? e)
     (if (str/starts-with? (nth words (:index @state))
           (str (:got-right @state) (.-key e)))
