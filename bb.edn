@@ -1,0 +1,11 @@
+{:deps {org.babashka/http-server {:mvn/version "0.1.12"}}
+ :tasks
+ {build {:doc "Build the static sci-koans site"
+         :task (do (shell "npm install")
+                   (shell "npx shadow-cljs release app")
+                   (println "Built app"))}
+  serve {:doc "Serve static assets"
+         :requires ([babashka.http-server :as server])
+         :task (server/exec {:port 9000
+                             :dir "docs"})}
+  watch (shell "npx shadow-cljs watch app")}}

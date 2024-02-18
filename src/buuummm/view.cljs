@@ -2,69 +2,305 @@
   (:require
     [clojure.string :as str]
     [hoplon.core :as h]
+    [hoplon.svg :as svg]
     [javelin.core :as j :refer [cell cell= defc defc=]]))
 
+(defn heart
+  [alive?]
+  (svg/svg :width "50px" :height "50px" :viewBox "0 0 24 24" :fill "none" :xmlns "http://www.w3.org/2000/svg"
+    (svg/path
+      :d "M2 9.1371C2 14 6.01943 16.5914 8.96173 18.9109C10 19.7294 11 20.5 12 20.5C13 20.5 14 19.7294 15.0383 18.9109C17.9806 16.5914 22 14 22 9.1371C22 4.27416 16.4998 0.825464 12 5.50063C7.50016 0.825464 2 4.27416 2 9.1371Z"
+      :fill (cell= (if alive? "#FF0000" "#BEBEBE")))))
+
 (def level-1
-  ["la;"
-   "sal"
-   "salsa"
-   "dadas;"
-   "assada"
-   "sassa"
-   "kakas"
-   "ja"
-   "safada"
-   "kaka"
-   "asa"
-   "fadas;"
-   "salada"
-   "lalas"
-   "fala;"
-   "alas"
-   "sala"
-   "jaja"
-   "lala"])
+  {:description "Mão esquerda, linha do meio."
+   :words ["asa"
+           "assada"
+           "dadas"
+           "daga"
+           "fada"
+           "safada"
+           "saga"
+           "sassa"]})
 
 (def level-2
-  ["sala"
-   "sal"
-   "fala"
-   "gala"
-   "asa"
-   "jaja"
-   "kaka"
-   "fada"
-   "haja"
-   "gaja"
-   "fadas"
-   "alas"
-   "lala"
-   "safada"
-   "adaga"
-   "haja;"
-   "salada"
-   "safada;"
-   "fadas;"
-   "alfa"
-   "dada"
-   "ska"
-   "lalas"
-   "adagas"
-   "shala"
-   "hal"
-   "lag"
-   "fada;"
-   "ah"
-   "gah"
-   "shh;"
-   "haka"
-   "salas"
-   "gala"])
+  {:description "Ambas mãos, linha do meio."
+   :words ["adaga"
+           "adagas"
+           "ah"
+           "alas"
+           "alfa"
+           "asa"
+           "fada;"
+           "fadas;"
+           "fala"
+           "falha"
+           "falsa"
+           "gah"
+           "gaja"
+           "gala"
+           "haja;"
+           "haka"
+           "hal"
+           "jaja"
+           "kaka"
+           "lag"
+           "lala"
+           "lalas"
+           "sal"
+           "sala"
+           "salada"
+           "salas"
+           "shala"
+           "shh;"
+           "ska"]})
 
+(def level-3
+  {:description "Nível 2 + linha de cima para mão esquerda"
+   :words [
+           "areia"
+           "data"
+           "dedel"
+           "des"
+           "draga"
+           "era"
+           "eras"
+           "essas"
+           "esses"
+           "falar"
+           "fale"
+           "falta"
+           "farda"
+           "farta"
+           "fases"
+           "fera"
+           "gata"
+           "jardas"
+           "largada"
+           "largas"
+           "lata"
+           "rasa"
+           "rasga"
+           "safra"
+           "water"
+           "watt"
+           "week"
+           "www"
+           "lagarta"
+           ]})
+
+(def level-4
+  {:description "Ambas mãos linha de cima e do meio."
+   :words [
+           "afago"
+           "afoito"
+           "ajuda"
+           "alojado"
+           "aro"
+           "aura"
+           "fajuto"
+           "falho"
+           "farol"
+           "feira"
+           "fogo"
+           "folha"
+           "forte"
+           "fruta"
+           "fuja"
+           "gafieira"
+           "galho"
+           "galo"
+           "jato"
+           "jaula"
+           "jipe"
+           "joia"
+           "juro"
+           "justo"
+           "kaiak"
+           "lago"
+           "lagoa"
+           "lua"
+           "luar"
+           "ouro"
+           "palha"
+           "parque"
+           "pasta"
+           "porto"
+           "preto"
+           "puro"
+           "quarto"
+           "quase"
+           "quatro"
+           "queijo"
+           "quer"
+           "quieto"
+           "quilo"
+           "raposa"
+           "rato"
+           "rio"
+           "rosa"
+           "rua"
+           "sagu"
+           "saldo"
+           "salgado"
+           "salto"
+           "sol"
+           "teia"
+           "teto"
+           ]})
+
+(def level-5
+  {:description "Nível 4 + linha de baixo com mão esquerda."
+   :words [
+           "abacaxi"
+           "alface"
+           "arco"
+           "axila"
+           "bala"
+           "barco"
+           "boia"
+           "bola"
+           "bolo"
+           "bote"
+           "boxe"
+           "boxeador"
+           "bravo"
+           "cabo"
+           "caixa"
+           "calha"
+           "calvo"
+           "capaz"
+           "casa"
+           "caveira"
+           "cervo"
+           "cobalto"
+           "cobertor"
+           "cobra"
+           "cruz"
+           "cruzado"
+           "extra"
+           "faz"
+           "feliz"
+           "flecha"
+           "foice"
+           "jabuti"
+           "jaleco"
+           "laca"
+           "paz"
+           "pizza"
+           "quebrado"
+           "queixo"
+           "salsicha"
+           "sobra"
+           "vala"
+           "voz"
+           "xale"
+           "xarope"
+           "xaxim"
+           "xerife"
+           "xerox"
+           "zebra"
+           "zelador"
+           "zelo"
+           "ziguezague"
+           ]})
+
+(def level-6
+  {:description "Todas as letras."
+   :words [
+           "buzina"
+           "carambola"
+           "faxina"
+           "gafanhoto"
+           "maluco"
+           "maneira"
+           "mano"
+           "manteiga"
+           "mar"
+           "março"
+           "menina"
+           "menino"
+           "mente"
+           "menu"
+           "mim"
+           "minhoca"
+           "minuto"
+           "moinho"
+           "monstro"
+           "montanha"
+           "morno"
+           "movimento"
+           "mulher"
+           "nabo"
+           "namorado"
+           "nana"
+           "nariz"
+           "nata"
+           "navio"
+           "new"
+           "ninho"
+           "ninja"
+           "noite"
+           "nome"
+           "norma"
+           "norte"
+           "nuca"
+           "nuvem"
+           "queima"
+           "quente"
+           "vexame"
+           "zabumba"
+           "zangado"
+           "zombaria"
+           ]})
+
+(def level-7
+  {:description "Números"
+   :words [
+           "29382"
+           "695"
+           "14026"
+           "560"
+           "719"
+           ]
+   })
+
+(def level-8
+  {:description "Acentos e cedilha"
+   :words [
+           "açafrão"
+           "açaí"
+           "balão"
+           "calvário"
+           "cão"
+           "dália"
+           "dálmatas"
+           "fogão"
+           "hálito"
+           "laço"
+           "mamão"
+           "manhã"
+           "maçã"
+           "minério"
+           "murmúrio"
+           "mágico"
+           "mão"
+           "névoa"
+           "nível"
+           "nó"
+           "núcleo"
+           "número"
+           "poço"
+           "vexatório"
+           "vulcão"
+           "xícara"
+           "zangão"
+           "zíper"
+           ]})
+
+(defc current-level 1)
 (def words
-  (cycle
-    (shuffle
-      level-2)))
+  (cycle (shuffle (:words level-3))))
 
 (defn random-enemy-type
   []
@@ -88,22 +324,31 @@
 (def vertical-values
   (vec (range 14 75)))
 
+(def MAX-LIFE 10)
+
+(defn initial-state
+  []
+  {:index 0
+   :game-status :playing
+   :correct-char 0
+   :incorrect-char 0
+   :life MAX-LIFE
+   :life-recovery-counter 0
+   :finished-words 0
+   :current-word-mistakes 0
+   :enemy-type :slime
+   :got-right ""
+   :extra-stats true
+   :horizontal (rand-nth horizontal-values)
+   :vertical (rand-nth vertical-values)
+   :color (random-color)
+   :status :idle
+   :started-at (js/Date.now)
+   :last-updated-at (js/Date.now)
+   :selected-word (create-selected (nth words @index))})
+
 (defonce state
-  (cell
-    {:index 0
-     :correct-char 0
-     :incorrect-char 0
-     :finished-words 0
-     :enemy-type :slime
-     :got-right ""
-     :extra-stats true
-     :horizontal (rand-nth horizontal-values)
-     :vertical (rand-nth vertical-values)
-     :color (random-color)
-     :status :idle
-     :started-at (js/Date.now)
-     :last-updated-at (js/Date.now)
-     :selected-word (create-selected (nth words @index))}))
+  (cell (initial-state)))
 
 (defn color->px
   [color]
@@ -147,24 +392,52 @@
       0
       accuracy-result)))
 
+(defn- reset-game!
+  [_]
+  (reset! state (initial-state)))
+
 (defn hello []
   (h/div
-    (h/div :class "game"
-      (h/div :class "score"
-        (h/div (h/text "Correct Chars: ~(:correct-char state)"))
-        (h/div (h/text "Correct Words: ~(:finished-words state)"))
-        (h/div (h/text "Wrong Chars  : ~(:incorrect-char state)"))
-        (h/when-tpl (cell= (:extra-stats state))
-          [(h/div (h/text "WPM          : ~(wpm state)"))
-           (h/div (h/text "Accuracy     : ~(accuracy state)%"))]))
-      (h/div  :style (cell= (str "font-size: 56px; margin:0px; text-transform:uppercase; position:absolute; right:" (:horizontal state) "vw; bottom: " (:vertical state) "vh;"))
-        (h/if-tpl (cell= (= :slime (:enemy-type state))) 
-          (slime)
-          (bee))
-        (h/for-tpl [char (cell= (:selected-word state))]
-          (h/span :class (cell=  {:red (= :miss (:status char))
-                                  :green (not= :miss (:status char))})
-            (h/text "~(:char char)")))))))
+    (h/if-tpl (cell= (= :playing (:game-status state)))
+      (h/div :class "game"
+        (h/div :class "score"
+          (heart (cell= (>= (:life state) 1)))
+          (heart (cell= (>= (:life state) 2)))
+          (heart (cell= (>= (:life state) 3)))
+          (heart (cell= (>= (:life state) 4)))
+          (heart (cell= (>= (:life state) 5)))
+          (heart (cell= (>= (:life state) 6)))
+          (heart (cell= (>= (:life state) 7)))
+          (heart (cell= (>= (:life state) 8)))
+          (heart (cell= (>= (:life state) 9)))
+          (heart (cell= (>= (:life state) 10)))
+          (h/div (h/text "Correct Chars: ~(:correct-char state)"))
+          (h/div (h/text "Correct Words: ~(:finished-words state)"))
+          (h/div (h/text "Wrong Chars  : ~(:incorrect-char state)"))
+          (h/when-tpl (cell= (:extra-stats state))
+            [(h/div (h/text "WPM          : ~(wpm state)"))
+             (h/div (h/text "Accuracy     : ~(accuracy state)%"))]))
+        (h/div  :style (cell= (str "font-size: 56px; margin:0px; text-transform:uppercase; position:absolute; right:" (:horizontal state) "vw; bottom: " (:vertical state) "vh;"))
+          (h/if-tpl (cell= (= :slime (:enemy-type state))) 
+            (slime)
+            (bee))
+          (h/for-tpl [char (cell= (:selected-word state))]
+            (h/span :class (cell=  {:red (= :miss (:status char))
+                                    :green (not= :miss (:status char))})
+              (h/text "~(:char char)")))))
+      (h/div :class "game"
+        (h/div :css {:display "flex"
+                     :align-items "center"
+                     :justify-content "center"
+                     :flex-direction "column"
+                     :width "100vw"
+                     :height "100vh"
+                     :color "white"
+                     :font-size "36px"}
+            (h/div "GAMEOVER")
+            (h/div
+              (h/button :click reset-game!
+                "Tentar novamente")))))))
 
 (def errou (js/Audio. "sound/errou.wav"))
 (def bum (js/Audio. "sound/bum.wav"))
@@ -201,43 +474,71 @@
   []
   (swap! state update :extra-stats not))
 
+(def life-recovery-at 2)
+
+(defn- inc-life
+  [current-life]
+  (min (inc current-life) MAX-LIFE))
+
+(defn- inc-life-recovery
+  [current-word-mistakes life-recovery-counter]
+  (if (zero? current-word-mistakes)
+    (inc life-recovery-counter)
+    life-recovery-counter))
+
 (defn process-key
   [e]
   (when (= "Control" (.-key e))
     (toggle-extra-stats))
   (when-not (ignore? e)
-    (if (str/starts-with? (nth words (:index @state))
-          (str (:got-right @state) (.-key e)))
-      (let [right (swap! state (fn [os]
-                                 (-> os
-                                   (update :got-right str (.-key e))
-                                   (update :correct-char inc)
-                                   (assoc :last-updated-at (js/Date.now))
-                                   (update-in [:selected-word (dec (count (str (:got-right @state) (.-key e))))]
-                                     assoc :status :hit))))]
-        (when (= (:got-right right) (nth words (:index @state)))
-          (.play bum)
-          (swap! state (fn [os]
-                         (assoc os :status :die
-                           :last-updated-at (js/Date.now))))
-          (h/with-timeout 800
-            (js/console.log 
+    (let [attempt (str (:got-right @state) (.-key e))]
+      (if (str/starts-with? (nth words (:index @state))
+            attempt)
+        (let [right (swap! state (fn [os]
+                                   (-> os
+                                     (update :correct-char inc)
+                                     (assoc :last-updated-at (js/Date.now)
+                                       :got-right attempt)
+                                     (update-in [:selected-word (dec (count (str (:got-right @state) (.-key e))))]
+                                       assoc :status :hit))))]
+          (when (= (:got-right right) (nth words (:index @state)))
+            (.play bum)
+            (swap! state (fn [os]
+                           (assoc os :status :die
+                             :last-updated-at (js/Date.now))))
+            (h/with-timeout 800
               (swap! state (fn [os]
-                             (let [new-index (inc (:index os))]
-                               (-> os
-                                 (update :finished-words inc)
-                                 (assoc :got-right ""
-                                   :last-updated-at (js/Date.now)
-                                   :color (random-color)
-                                   :status :idle
-                                   :enemy-type (random-enemy-type)
-                                   :horizontal (rand-nth horizontal-values)
-                                   :vertical (rand-nth vertical-values)
-                                   :selected-word (create-selected (nth words new-index))
-                                   :index new-index)))))))))
-      (do 
-        (swap! state (fn [os]
-                       (-> os
-                         (assoc :last-updated-at (js/Date.now))
-                         (update :incorrect-char inc))))
-        (.play errou)))))
+                             (let [new-index (inc (:index os))
+                                   current-word-mistakes (:current-word-mistakes os)
+                                   {:keys [life-recovery-counter]
+                                    :as new-state} (-> os
+                                                     (update :finished-words inc)
+                                                     (update :life-recovery-counter #(inc-life-recovery current-word-mistakes %))
+                                                     (assoc :got-right ""
+                                                       :last-updated-at (js/Date.now)
+                                                       :color (random-color)
+                                                       :current-word-mistakes 0
+                                                       :status :idle
+                                                       :enemy-type (random-enemy-type)
+                                                       :horizontal (rand-nth horizontal-values)
+                                                       :vertical (rand-nth vertical-values)
+                                                       :selected-word (create-selected (nth words new-index))
+                                                       :index new-index))]
+                               (if (>= life-recovery-counter life-recovery-at)
+                                 (-> new-state
+                                   (assoc :life-recovery-counter 0)
+                                   (update :life inc-life))
+                                 new-state)))))))
+        (do 
+          (swap! state (fn [os]
+                         (let [{:keys [life]
+                                :as new-state} (-> os
+                                                 (assoc :last-updated-at (js/Date.now)
+                                                   :life-recovery-counter 0)
+                                                 (update :incorrect-char inc)
+                                                 (update :current-word-mistakes inc)
+                                                 (update :life dec))]
+                           (if-not (pos? life)
+                             (assoc new-state :game-status :gameover)
+                             new-state))))
+          (.play errou))))))

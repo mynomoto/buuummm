@@ -6,7 +6,7 @@ body {
     background-color: #380700;
     background-image: url("../image/black-felt.png");
     background-repeat: repeat;
-    width: 100%;
+    width: 100vw;
     height: 100vh;
     background-size: 100% 100vh;
 }
