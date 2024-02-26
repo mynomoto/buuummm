@@ -258,10 +258,23 @@
   {:description "Números"
    :words [
            "29382"
-           "695"
+           "69501"
            "14026"
-           "560"
-           "719"
+           "56093"
+           "71956"
+           "99552"
+           "28419"
+           "75218"
+           "12387"
+           "56830"
+           "20834"
+           "38920"
+           "83025"
+           "15069"
+           "51602"
+           "56065"
+           "65056"
+           "30917"
            ]
    })
 
@@ -300,7 +313,7 @@
 
 (defc current-level 1)
 (def words
-  (cycle (shuffle (:words level-3))))
+  (cycle (shuffle (:words level-7))))
 
 (defn random-enemy-type
   []
@@ -490,7 +503,7 @@
   [e]
   (when (= "Control" (.-key e))
     (toggle-extra-stats))
-  (when-not (ignore? e)
+  (when-not (or (ignore? e) (= :gameover (:game-status @state)))
     (let [attempt (str (:got-right @state) (.-key e))]
       (if (str/starts-with? (nth words (:index @state))
             attempt)
