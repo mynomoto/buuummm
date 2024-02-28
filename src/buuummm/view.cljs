@@ -12,308 +12,304 @@
       :d "M2 9.1371C2 14 6.01943 16.5914 8.96173 18.9109C10 19.7294 11 20.5 12 20.5C13 20.5 14 19.7294 15.0383 18.9109C17.9806 16.5914 22 14 22 9.1371C22 4.27416 16.4998 0.825464 12 5.50063C7.50016 0.825464 2 4.27416 2 9.1371Z"
       :fill (cell= (if alive? "#FF0000" "#BEBEBE")))))
 
-(def level-1
-  {:description "Mão esquerda, linha do meio."
-   :words ["asa"
-           "assada"
-           "dadas"
-           "daga"
-           "fada"
-           "safada"
-           "saga"
-           "sassa"]})
+(def levels
+  [{:id :pt-1
+    :description "Mão esquerda, linha do meio."
+    :words ["asa"
+            "assada"
+            "dadas"
+            "daga"
+            "fada"
+            "safada"
+            "saga"
+            "sassa"]}
+   {:id :pt-2
+    :description "Ambas mãos, linha do meio."
+    :words ["adaga"
+            "adagas"
+            "ah"
+            "alas"
+            "alfa"
+            "asa"
+            "fada;"
+            "fadas;"
+            "fala"
+            "falha"
+            "falsa"
+            "gah"
+            "gaja"
+            "gala"
+            "haja;"
+            "haka"
+            "hal"
+            "jaja"
+            "kaka"
+            "lag"
+            "lala"
+            "lalas"
+            "sal"
+            "sala"
+            "salada"
+            "salas"
+            "shala"
+            "shh;"
+            "ska"]}
+   {:id :pt-3
+    :description "Linha do meio + linha de cima para mão esquerda"
+    :words [
+            "areia"
+            "data"
+            "dedel"
+            "des"
+            "draga"
+            "era"
+            "eras"
+            "essas"
+            "esses"
+            "falar"
+            "fale"
+            "falta"
+            "farda"
+            "farta"
+            "fases"
+            "fera"
+            "gata"
+            "jardas"
+            "largada"
+            "largas"
+            "lata"
+            "rasa"
+            "rasga"
+            "safra"
+            "water"
+            "watt"
+            "week"
+            "www"
+            "lagarta"
+            ]}
+   {:id :pt-4
+    :description "Linha de cima e do meio."
+    :words [
+            "afago"
+            "afoito"
+            "ajuda"
+            "alojado"
+            "aro"
+            "aura"
+            "fajuto"
+            "falho"
+            "farol"
+            "feira"
+            "fogo"
+            "folha"
+            "forte"
+            "fruta"
+            "fuja"
+            "gafieira"
+            "galho"
+            "galo"
+            "jato"
+            "jaula"
+            "jipe"
+            "joia"
+            "juro"
+            "justo"
+            "kaiak"
+            "lago"
+            "lagoa"
+            "lua"
+            "luar"
+            "ouro"
+            "palha"
+            "parque"
+            "pasta"
+            "porto"
+            "preto"
+            "puro"
+            "quarto"
+            "quase"
+            "quatro"
+            "queijo"
+            "quer"
+            "quieto"
+            "quilo"
+            "raposa"
+            "rato"
+            "rio"
+            "rosa"
+            "rua"
+            "sagu"
+            "saldo"
+            "salgado"
+            "salto"
+            "sol"
+            "teia"
+            "teto"
+            ]}
+   {:id :pt-5
+    :description "Linha de cima e do meio + linha de baixo para mão esquerda."
+    :words [
+            "abacaxi"
+            "alface"
+            "arco"
+            "axila"
+            "bala"
+            "barco"
+            "boia"
+            "bola"
+            "bolo"
+            "bote"
+            "boxe"
+            "boxeador"
+            "bravo"
+            "cabo"
+            "caixa"
+            "calha"
+            "calvo"
+            "capaz"
+            "casa"
+            "caveira"
+            "cervo"
+            "cobalto"
+            "cobertor"
+            "cobra"
+            "cruz"
+            "cruzado"
+            "extra"
+            "faz"
+            "feliz"
+            "flecha"
+            "foice"
+            "jabuti"
+            "jaleco"
+            "laca"
+            "paz"
+            "pizza"
+            "quebrado"
+            "queixo"
+            "salsicha"
+            "sobra"
+            "vala"
+            "voz"
+            "xale"
+            "xarope"
+            "xaxim"
+            "xerife"
+            "xerox"
+            "zebra"
+            "zelador"
+            "zelo"
+            "ziguezague"
+            ]}
+   {:id :pt-6
+    :description "Todas as letras."
+    :words [
+            "buzina"
+            "carambola"
+            "faxina"
+            "gafanhoto"
+            "maluco"
+            "maneira"
+            "mano"
+            "manteiga"
+            "mar"
+            "menina"
+            "menino"
+            "mente"
+            "menu"
+            "mim"
+            "minhoca"
+            "minuto"
+            "moinho"
+            "monstro"
+            "montanha"
+            "morno"
+            "movimento"
+            "mulher"
+            "nabo"
+            "namorado"
+            "nana"
+            "nariz"
+            "nata"
+            "navio"
+            "new"
+            "ninho"
+            "ninja"
+            "noite"
+            "nome"
+            "norma"
+            "norte"
+            "nuca"
+            "nuvem"
+            "queima"
+            "quente"
+            "vexame"
+            "zabumba"
+            "zangado"
+            "zombaria"
+            ]}
+   {:id :pt-7
+    :description "Números"
+    :words ["29382"
+            "69501"
+            "14026"
+            "56093"
+            "71956"
+            "99552"
+            "28419"
+            "75218"
+            "12387"
+            "56830"
+            "20834"
+            "38920"
+            "83025"
+            "15069"
+            "51602"
+            "56065"
+            "65056"
+            "30917"]}
+   #_{:id :pt-8
+    :description "Acentos e cedilha"
+    :words [
+            "março"
+            "açafrão"
+            "açaí"
+            "balão"
+            "calvário"
+            "cão"
+            "dália"
+            "dálmatas"
+            "fogão"
+            "hálito"
+            "laço"
+            "mamão"
+            "manhã"
+            "maçã"
+            "minério"
+            "murmúrio"
+            "mágico"
+            "mão"
+            "névoa"
+            "nível"
+            "nó"
+            "núcleo"
+            "número"
+            "poço"
+            "vexatório"
+            "vulcão"
+            "xícara"
+            "zangão"
+            "zíper"
+            ]}])
 
-(def level-2
-  {:description "Ambas mãos, linha do meio."
-   :words ["adaga"
-           "adagas"
-           "ah"
-           "alas"
-           "alfa"
-           "asa"
-           "fada;"
-           "fadas;"
-           "fala"
-           "falha"
-           "falsa"
-           "gah"
-           "gaja"
-           "gala"
-           "haja;"
-           "haka"
-           "hal"
-           "jaja"
-           "kaka"
-           "lag"
-           "lala"
-           "lalas"
-           "sal"
-           "sala"
-           "salada"
-           "salas"
-           "shala"
-           "shh;"
-           "ska"]})
+(defc selected-level :pt-7)
 
-(def level-3
-  {:description "Nível 2 + linha de cima para mão esquerda"
-   :words [
-           "areia"
-           "data"
-           "dedel"
-           "des"
-           "draga"
-           "era"
-           "eras"
-           "essas"
-           "esses"
-           "falar"
-           "fale"
-           "falta"
-           "farda"
-           "farta"
-           "fases"
-           "fera"
-           "gata"
-           "jardas"
-           "largada"
-           "largas"
-           "lata"
-           "rasa"
-           "rasga"
-           "safra"
-           "water"
-           "watt"
-           "week"
-           "www"
-           "lagarta"
-           ]})
+(defc= current-level
+  (some #(when (= selected-level (:id %))
+           %) levels))
 
-(def level-4
-  {:description "Ambas mãos linha de cima e do meio."
-   :words [
-           "afago"
-           "afoito"
-           "ajuda"
-           "alojado"
-           "aro"
-           "aura"
-           "fajuto"
-           "falho"
-           "farol"
-           "feira"
-           "fogo"
-           "folha"
-           "forte"
-           "fruta"
-           "fuja"
-           "gafieira"
-           "galho"
-           "galo"
-           "jato"
-           "jaula"
-           "jipe"
-           "joia"
-           "juro"
-           "justo"
-           "kaiak"
-           "lago"
-           "lagoa"
-           "lua"
-           "luar"
-           "ouro"
-           "palha"
-           "parque"
-           "pasta"
-           "porto"
-           "preto"
-           "puro"
-           "quarto"
-           "quase"
-           "quatro"
-           "queijo"
-           "quer"
-           "quieto"
-           "quilo"
-           "raposa"
-           "rato"
-           "rio"
-           "rosa"
-           "rua"
-           "sagu"
-           "saldo"
-           "salgado"
-           "salto"
-           "sol"
-           "teia"
-           "teto"
-           ]})
-
-(def level-5
-  {:description "Nível 4 + linha de baixo com mão esquerda."
-   :words [
-           "abacaxi"
-           "alface"
-           "arco"
-           "axila"
-           "bala"
-           "barco"
-           "boia"
-           "bola"
-           "bolo"
-           "bote"
-           "boxe"
-           "boxeador"
-           "bravo"
-           "cabo"
-           "caixa"
-           "calha"
-           "calvo"
-           "capaz"
-           "casa"
-           "caveira"
-           "cervo"
-           "cobalto"
-           "cobertor"
-           "cobra"
-           "cruz"
-           "cruzado"
-           "extra"
-           "faz"
-           "feliz"
-           "flecha"
-           "foice"
-           "jabuti"
-           "jaleco"
-           "laca"
-           "paz"
-           "pizza"
-           "quebrado"
-           "queixo"
-           "salsicha"
-           "sobra"
-           "vala"
-           "voz"
-           "xale"
-           "xarope"
-           "xaxim"
-           "xerife"
-           "xerox"
-           "zebra"
-           "zelador"
-           "zelo"
-           "ziguezague"
-           ]})
-
-(def level-6
-  {:description "Todas as letras."
-   :words [
-           "buzina"
-           "carambola"
-           "faxina"
-           "gafanhoto"
-           "maluco"
-           "maneira"
-           "mano"
-           "manteiga"
-           "mar"
-           "março"
-           "menina"
-           "menino"
-           "mente"
-           "menu"
-           "mim"
-           "minhoca"
-           "minuto"
-           "moinho"
-           "monstro"
-           "montanha"
-           "morno"
-           "movimento"
-           "mulher"
-           "nabo"
-           "namorado"
-           "nana"
-           "nariz"
-           "nata"
-           "navio"
-           "new"
-           "ninho"
-           "ninja"
-           "noite"
-           "nome"
-           "norma"
-           "norte"
-           "nuca"
-           "nuvem"
-           "queima"
-           "quente"
-           "vexame"
-           "zabumba"
-           "zangado"
-           "zombaria"
-           ]})
-
-(def level-7
-  {:description "Números"
-   :words [
-           "29382"
-           "69501"
-           "14026"
-           "56093"
-           "71956"
-           "99552"
-           "28419"
-           "75218"
-           "12387"
-           "56830"
-           "20834"
-           "38920"
-           "83025"
-           "15069"
-           "51602"
-           "56065"
-           "65056"
-           "30917"
-           ]
-   })
-
-(def level-8
-  {:description "Acentos e cedilha"
-   :words [
-           "açafrão"
-           "açaí"
-           "balão"
-           "calvário"
-           "cão"
-           "dália"
-           "dálmatas"
-           "fogão"
-           "hálito"
-           "laço"
-           "mamão"
-           "manhã"
-           "maçã"
-           "minério"
-           "murmúrio"
-           "mágico"
-           "mão"
-           "névoa"
-           "nível"
-           "nó"
-           "núcleo"
-           "número"
-           "poço"
-           "vexatório"
-           "vulcão"
-           "xícara"
-           "zangão"
-           "zíper"
-           ]})
-
-(defc current-level 1)
-(def words
-  (cycle (shuffle (:words level-7))))
+(defc= words
+  (cycle (shuffle (:words current-level))))
 
 (defn random-enemy-type
   []
@@ -358,10 +354,10 @@
    :status :idle
    :started-at (js/Date.now)
    :last-updated-at (js/Date.now)
-   :selected-word (create-selected (nth words @index))})
+   :selected-word (create-selected (nth @words @index))})
 
 (defonce state
-  (cell (initial-state)))
+  (cell {:game-status :menu}))
 
 (defn color->px
   [color]
@@ -409,9 +405,35 @@
   [_]
   (reset! state (initial-state)))
 
+(cell= (js/console.log {:sl selected-level}))
+
+(defn- ir-para-menu
+  [_]
+  (swap! state assoc :game-status :menu))
+
 (defn hello []
   (h/div
-    (h/if-tpl (cell= (= :playing (:game-status state)))
+    (h/cond-tpl
+      (cell= (= :menu (:game-status state)))
+      (h/div :class "game"
+        (h/div :css {:display "flex"
+                     :align-items "center"
+                     :justify-content "center"
+                     :flex-direction "column"
+                     :width "100vw"
+                     :height "100vh"
+                     :color "white"
+                     :font-size "36px"}
+          (h/div "MENU")
+          (h/select
+            :change #(do (js/console.log %) (reset! selected-level (keyword (subs @% 1))))
+            :value (cell= (str selected-level))
+            (h/for-tpl [level levels]
+              (h/option :selected (cell= (= selected-level (:id level))) :value (cell= (:id level)) (cell= (:description level)))))
+          (h/div
+            (h/button :click reset-game!
+              "Iniciar"))))
+      (cell= (= :playing (:game-status state)))
       (h/div :class "game"
         (h/div :class "score"
           (heart (cell= (>= (:life state) 1)))
@@ -438,6 +460,8 @@
             (h/span :class (cell=  {:red (= :miss (:status char))
                                     :green (not= :miss (:status char))})
               (h/text "~(:char char)")))))
+
+      (cell= (= :gameover (:game-status state)))
       (h/div :class "game"
         (h/div :css {:display "flex"
                      :align-items "center"
@@ -447,10 +471,13 @@
                      :height "100vh"
                      :color "white"
                      :font-size "36px"}
-            (h/div "GAMEOVER")
-            (h/div
-              (h/button :click reset-game!
-                "Tentar novamente")))))))
+          (h/div "GAMEOVER")
+
+          (h/div
+            (h/button :click ir-para-menu
+              "Ir para o menu")
+            (h/button :click reset-game!
+              "Tentar novamente")))))))
 
 (def errou (js/Audio. "sound/errou.wav"))
 (def bum (js/Audio. "sound/bum.wav"))
@@ -462,6 +489,7 @@
     (.-altKey e)
     (contains? #{"Alt"
                  "AltGraph"
+                 "Dead"
                  "CapsLock"
                  "Control"
                  "Escape"
@@ -504,7 +532,8 @@
   (when (= "Control" (.-key e))
     (toggle-extra-stats))
   (when-not (or (ignore? e) (= :gameover (:game-status @state)))
-    (let [attempt (str (:got-right @state) (.-key e))]
+    (let [attempt (str (:got-right @state) (.-key e))
+          words @words]
       (if (str/starts-with? (nth words (:index @state))
             attempt)
         (let [right (swap! state (fn [os]
